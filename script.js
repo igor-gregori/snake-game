@@ -8,10 +8,7 @@ let snake = [
 ];
 let direction = "right";
 let squareSize = 10;
-let food = {
-  x: Math.floor(Math.random() * (canvas.width / 10)) * 10,
-  y: Math.floor(Math.random() * (canvas.height / 10)) * 10,
-};
+let food = { x: 0, y: 0 };
 
 window.addEventListener("keydown", function (event) {
   switch (event.key) {
@@ -30,6 +27,7 @@ window.addEventListener("keydown", function (event) {
   }
 });
 
+spawnFood();
 const intervalID = setInterval(() => {
   draw();
 }, 100);
@@ -43,7 +41,7 @@ function draw() {
   ctx.fillStyle = "green";
   ctx.fillRect(food.x, food.y, squareSize, squareSize);
   verifyWall();
-  // verify food
+  verifyFood();
   // verify snake body
   addSquare();
 }
@@ -58,6 +56,21 @@ function verifyWall() {
     clearInterval(intervalID);
     alert("game over");
   }
+}
+
+function verifyFood() {
+  const head = snake[snake.length - 1];
+  if (head.x === food.x && head.y === food.y) {
+    snake.push(head);
+    spawnFood();
+  }
+}
+
+function spawnFood() {
+  food = {
+    x: Math.floor(Math.random() * (canvas.width / 10)) * 10,
+    y: Math.floor(Math.random() * (canvas.height / 10)) * 10,
+  };
 }
 
 function addSquare() {
