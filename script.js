@@ -42,7 +42,7 @@ function draw() {
   ctx.fillRect(food.x, food.y, squareSize, squareSize);
   verifyWall();
   verifyFood();
-  // verify snake body
+  verifySnakeBody();
   addSquare();
 }
 
@@ -63,6 +63,16 @@ function verifyFood() {
   if (head.x === food.x && head.y === food.y) {
     snake.push(head);
     spawnFood();
+  }
+}
+
+function verifySnakeBody() {
+  const head = snake[snake.length - 1];
+  for (let i = 0; i < snake.length - 2; i++) {
+    if (head.x === snake[i].x && head.y === snake[i].y) {
+      clearInterval(intervalID);
+      alert("game over");
+    }
   }
 }
 
