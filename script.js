@@ -1,49 +1,79 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
+let renderTime = 100;
 let snake = [
   { x: 10, y: 10 },
   { x: 20, y: 10 },
   { x: 30, y: 10 },
 ];
 let direction = "right";
+let lastDirectionChange = performance.now();
 let squareSize = 10;
 let food = { x: 0, y: 0 };
 
 window.addEventListener("keydown", function (event) {
   switch (event.key) {
     case "ArrowUp":
-      if (direction !== "down") direction = "up";
+      changeDirection("up");
       break;
     case "ArrowDown":
-      if (direction !== "up") direction = "down";
+      changeDirection("down");
       break;
     case "ArrowLeft":
-      if (direction !== "right") direction = "left";
+      changeDirection("left");
       break;
     case "ArrowRight":
-      if (direction !== "left") direction = "right";
+      changeDirection("right");
       break;
   }
 });
 
 spawnFood();
+
 const intervalID = setInterval(() => {
   draw();
-}, 100);
+}, renderTime);
 
 function draw() {
+  renderSnake();
+  renderFood();
+  verifyWall();
+  verifyFood();
+  verifySnakeBody();
+  moveSnake();
+}
+
+function changeDirection(newDirection) {
+  if (performance.now() - lastDirectionChange < renderTime) return;
+  switch (newDirection) {
+    case "up":
+      if (newDirection !== "down") direction = "up";
+      break;
+    case "down":
+      if (newDirection !== "up") direction = "down";
+      break;
+    case "left":
+      if (newDirection !== "right") direction = "left";
+      break;
+    case "right":
+      if (newDirection !== "left") direction = "right";
+      break;
+  }
+  lastDirectionChange = performance.now();
+}
+
+function renderSnake() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   for (const square of snake) {
     ctx.fillStyle = "white";
     ctx.fillRect(square.x, square.y, squareSize, squareSize);
   }
+}
+
+function renderFood() {
   ctx.fillStyle = "green";
   ctx.fillRect(food.x, food.y, squareSize, squareSize);
-  verifyWall();
-  verifyFood();
-  verifySnakeBody();
-  addSquare();
 }
 
 function verifyWall() {
@@ -83,11 +113,21 @@ function spawnFood() {
   };
 }
 
-function addSquare() {
+function moveSnake() {
   const head = snake[snake.length - 1];
-  if (direction === "right") snake.push({ x: head.x + squareSize, y: head.y });
-  if (direction === "left") snake.push({ x: head.x - squareSize, y: head.y });
-  if (direction === "down") snake.push({ x: head.x, y: head.y + squareSize });
-  if (direction === "up") snake.push({ x: head.x, y: head.y - squareSize });
+  switch (direction) {
+    case "right":
+      snake.push({ x: head.x + squareSize, y: head.y });
+      break;
+    case "left":
+      snake.push({ x: head.x - squareSize, y: head.y });
+      break;
+    case "down":
+      snake.push({ x: head.x, y: head.y + squareSize });
+      break;
+    case "up":
+      snake.push({ x: head.x, y: head.y - squareSize });
+      break;
+  }
   snake.shift();
 }
