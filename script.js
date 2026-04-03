@@ -1,6 +1,8 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
+const snakeLengthInfo = document.getElementById("snakeLength");
+
 let renderTime = 100;
 let snake = [
   { x: 10, y: 10 },
@@ -29,6 +31,7 @@ window.addEventListener("keydown", function (event) {
   }
 });
 
+setSnakeInfo(snake.length);
 spawnFood();
 
 const intervalID = setInterval(() => {
@@ -92,6 +95,7 @@ function verifyFood() {
   const head = snake[snake.length - 1];
   if (head.x === food.x && head.y === food.y) {
     snake.push(head);
+    setSnakeInfo(snake.length);
     spawnFood();
   }
 }
@@ -130,4 +134,8 @@ function moveSnake() {
       break;
   }
   snake.shift();
+}
+
+function setSnakeInfo(length) {
+  snakeLengthInfo.innerText = `Snake Length: ${length}`;
 }

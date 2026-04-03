@@ -1,8 +1,5 @@
 body {
   background-color: #141414;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   height: 100vh;
   margin: 0;
 }
@@ -10,4 +7,24 @@ body {
 canvas {
   background-color: #1f1f1f;
   border-radius: 2px;
+}
+
+p {
+  color: wheat;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 50%;
 }
