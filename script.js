@@ -115,6 +115,10 @@ function spawnFood() {
     x: Math.floor(Math.random() * (canvas.width / 10)) * 10,
     y: Math.floor(Math.random() * (canvas.height / 10)) * 10,
   };
+  const isInSnake = snake.find((e) => e.x === food.x && e.y === food.y);
+  if (isInSnake !== undefined) {
+    spawnFood();
+  }
 }
 
 function moveSnake() {
