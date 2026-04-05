@@ -40,6 +40,7 @@ const intervalID = setInterval(() => {
 function draw() {
   renderSnake();
   renderFood();
+  verifyWin();
   verifyWall();
   verifyFood();
   verifySnakeBody();
@@ -72,8 +73,15 @@ function renderSnake() {
 }
 
 function renderFood() {
-  ctx.fillStyle = "green";
+  ctx.fillStyle = "greenyellow";
   ctx.fillRect(food.x, food.y, squareSize, squareSize);
+}
+
+function verifyWin() {
+  if (snake.length >= 100) {
+    clearInterval(intervalID);
+    alert("You win");
+  }
 }
 
 function verifyWall() {

@@ -8,4 +8,4 @@ A basic snake game using canvas api
 - [ ] Add sounds
 - [x] Add some information
 - [x] Don't spawn food on snake body
-- [ ] Verify win
+- [x] Verify win
