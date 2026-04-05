@@ -3,15 +3,16 @@ const ctx = canvas.getContext("2d");
 
 const snakeLengthInfo = document.getElementById("snakeLength");
 
-let renderTime = 100;
+const renderTime = 100;
 let snake = [
   { x: 10, y: 10 },
   { x: 20, y: 10 },
   { x: 30, y: 10 },
 ];
 let direction = "right";
-let squareSize = 10;
+const squareSize = 10;
 let food = { x: 0, y: 0 };
+const foodsToWin = 50;
 
 window.addEventListener("keydown", function (event) {
   switch (event.key) {
@@ -78,9 +79,9 @@ function renderFood() {
 }
 
 function verifyWin() {
-  if (snake.length >= 100) {
+  if (snake.length >= foodsToWin) {
     clearInterval(intervalID);
-    alert("You win");
+    renderWin();
   }
 }
 
@@ -88,11 +89,11 @@ function verifyWall() {
   const head = snake[snake.length - 1];
   if (head.x < 0 || head.x > canvas.width) {
     clearInterval(intervalID);
-    alert("game over");
+    renderGameOver();
   }
   if (head.y < 0 || head.y > canvas.height) {
     clearInterval(intervalID);
-    alert("game over");
+    renderGameOver();
   }
 }
 
@@ -110,7 +111,7 @@ function verifySnakeBody() {
   for (let i = 0; i < snake.length - 2; i++) {
     if (head.x === snake[i].x && head.y === snake[i].y) {
       clearInterval(intervalID);
-      alert("game over");
+      renderGameOver();
     }
   }
 }
@@ -146,5 +147,19 @@ function moveSnake() {
 }
 
 function setSnakeInfo(length) {
-  snakeLengthInfo.innerText = `Snake Length: ${length}`;
+  snakeLengthInfo.innerText = `Snake Length: ${length}/${foodsToWin}`;
+}
+
+function renderWin() {
+  ctx.font = "48px Roboto Mono";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText("You win 🏆", canvas.width / 2, canvas.height / 2);
+}
+
+function renderGameOver() {
+  ctx.font = "48px Roboto Mono";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText("Game over 🙁", canvas.width / 2, canvas.height / 2);
 }
