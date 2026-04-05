@@ -10,7 +10,6 @@ let snake = [
   { x: 30, y: 10 },
 ];
 let direction = "right";
-let lastDirectionChange = performance.now();
 let squareSize = 10;
 let food = { x: 0, y: 0 };
 
@@ -48,7 +47,6 @@ function draw() {
 }
 
 function changeDirection(newDirection) {
-  if (performance.now() - lastDirectionChange < renderTime) return;
   switch (newDirection) {
     case "up":
       if (newDirection !== "down") direction = "up";
@@ -63,7 +61,6 @@ function changeDirection(newDirection) {
       if (newDirection !== "left") direction = "right";
       break;
   }
-  lastDirectionChange = performance.now();
 }
 
 function renderSnake() {
