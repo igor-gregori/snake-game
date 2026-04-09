@@ -1,11 +1,7 @@
-🚧 WIP  
-A basic snake game using canvas api
+# Snake Game
 
-### Task list
+![Preview](./preview.gif)
 
-- [x] Fix fast mov change
-- [x] Build better win/game over screen
-- [ ] Add sounds
-- [x] Add some information
-- [x] Don't spawn food on snake body
-- [x] Verify win
+<a href="https://igor-gregori.github.io/gradient-wallpaper-generator/" target="_blank">🔗 Live demo</a>
+
+Small project to teach some animation logic in pure html canvas
